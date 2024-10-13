@@ -1,19 +1,19 @@
 function login() {
     const username = document.getElementById('username').value.toLowerCase();
-    const managers = ['גיל', 'gil', 'ארתור', 'arthur'];  // מנהלים: גיל וארתור (גם באנגלית וגם בעברית)
-    const workers = ['יבגני', 'evgeniy', 'ערן', 'eran', 'ולרי', 'valery'];  // מפזרים: יבגני, ערן, ולרי (גם באנגלית וגם בעברית)
+    const managers = ['גיל', 'gil', 'ארתור', 'arthur'];  // מנהלים: גיל וארתור
+    const workers = ['יבגני', 'evgeniy', 'ערן', 'eran', 'ולרי', 'valery'];  // מפזרים: יבגני, ערן, ולרי
 
     if (username === '') {
         alert('נא להזין שם משתמש');
         return;
     }
-    
+
     // הצגת הודעת טעינה
     document.getElementById('loadingMessage').style.display = 'block';
 
     // שמירת שם המשתמש ב-localStorage
     localStorage.setItem('currentUser', username);
-    
+
     // עיבוד נתוני ההתחברות
     setTimeout(() => {
         if (managers.includes(username)) {
