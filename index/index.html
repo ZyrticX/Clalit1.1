@@ -1,35 +1,23 @@
-function login() {
-    const username = document.getElementById('username').value.toLowerCase();
-    const managers = ['גיל', 'gil', 'ארתור', 'arthur'];  // מנהלים: גיל וארתור (גם באנגלית וגם בעברית)
-    const workers = ['יבגני', 'evgeniy', 'ערן', 'eran', 'ולרי', 'valery'];  // מפזרים: יבגני, ערן, ולרי (גם באנגלית וגם בעברית)
-
-    if (username === '') {
-        alert('נא להזין שם משתמש');
-        return;
-    }
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התחברות - מערכת ניהול משימות בית אבות</title>
     
-    // הצגת הודעת טעינה
-    document.getElementById('loadingMessage').style.display = 'block';
+    <!-- קישור לקובץ ה-CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>התחברות למערכת</h1>
+        <input type="text" id="username" placeholder="שם משתמש" required>
+        <button onclick="login()">התחבר</button>
+        <!-- אזור הצגת הודעת טעינה -->
+        <p id="loadingMessage" style="display:none; color: var(--olive-green);">טוען...</p>
+    </div>
 
-    // שמירת שם המשתמש ב-localStorage
-    localStorage.setItem('currentUser', username);
-    
-    // עיבוד נתוני ההתחברות
-    setTimeout(() => {
-        if (managers.includes(username)) {
-
-            // אם זה ארתור או גיל - הצגת מסך טעינה מותאם אישית
-            if (username === 'ארתור' || username === 'arthur') {
-                window.location.href = 'loading.html?user=arthur';
-            } else if (username === 'גיל' || username === 'gil') {
-                window.location.href = 'loading.html?user=gil';
-            }
-        } else if (workers.includes(username)) {
-            // מפזרים עוברים ישירות לדף המשימות
-            window.location.href = 'tasks.html';
-        } else {
-            document.getElementById('loadingMessage').style.display = 'none'; // הסתרת הודעת טעינה אם השם לא מוכר
-            alert('שם משתמש לא מוכר');
-        }
-    }, 500); // הוספת השהיה קצרה ליצירת תחושת תגובה
-}
+    <!-- קישור לקובץ ה-JavaScript -->
+    <script src="js/login.js"></script>
+</body>
+</html>
