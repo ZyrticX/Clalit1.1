@@ -63,8 +63,8 @@
     <script>
         function login() {
             const username = document.getElementById('username').value.toLowerCase();
-            const managers = ['gil', 'arthur'];
-            const workers = ['eran', 'yevgeny', 'valery'];
+            const managers = ['arthur', 'gil'];
+            const workers = ['eran', 'evgeniy', 'valery'];
             
             if (username === '') {
                 alert('נא להזין שם משתמש');
@@ -75,9 +75,9 @@
             
             if (managers.includes(username)) {
                 if (username === 'arthur') {
-                    window.location.href = 'loading.html';
-                } else {
-                    window.location.href = 'tasks.html';
+                    window.location.href = 'loading.html?user=arthur';
+                } else if (username === 'gil') {
+                    window.location.href = 'loading.html?user=gil';
                 }
             } else if (workers.includes(username)) {
                 window.location.href = 'tasks.html';
