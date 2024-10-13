@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מעקב משימות - מערכת ניהול</title>
+    <style>
+        :root {
+            --olive-green: #556B2F;
+            --dark-gray: #333333;
+            --light-gray: #f0f0f0;
+            --white: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 800px;
+            text-align: center;
+        }
+        h1 {
+            color: var(--olive-green);
+            margin-bottom: 10px;
+        }
+        .status-container {
+            margin-bottom: 20px;
+        }
+        .status-container span {
+            display: block;
+            font-size: 1.2em;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: var(--dark-gray);
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .progress {
+            width: 0%;
+            height: 20px;
+            background-color: var(--olive-green);
+            border-radius: 5px;
+            text-align: center;
+            line-height: 20px;
+            color: var(--white);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid var(--dark-gray);
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: var(--olive-green);
+            color: var(--white);
+        }
+        td.completed {
+            background-color: #ccffcc;
+            color: #006600;
+        }
+        button {
+            padding: 10px;
+            background-color: var(--olive-green);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>שלום <span id="usernameDisplay"></span></h1>
+        <div class="status-container">
+            <span id="dateDisplay"></span>
+            <span id="timeDisplay"></span>
+            <div class="progress-bar">
+                <div id="progress" class="progress">0%</div>
+            </div>
+        </div>
+
+        <table id="tasksTable">
+            <thead>
+                <tr>
+                    <th>מחלקה</th>
+                    <th>משימה</th>
+                    <th>סטטוס</th>
+                    <th>סימון בוצע</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Here will be dynamically added rows based on the departments and tasks -->
+            </tbody>
+        </table>
+
+        <button id="saveButton">שמור שינויים</button>
+    </div>
+
+    <script>
+        const currentUser = localStorage.getItem('currentUser');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        usernameDisplay.textContent = currentUser.charAt(0).toUpperCase() + currentUser.slice(1);
+
+        // Display date and time
+        const dateDisplay = document.getElementById('dateDisplay');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const updateDateTime = () => {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateDisplay.textContent = now.toLocaleDateString('he-IL', options);
+            timeDisplay.textContent = now.toLocaleTimeString('he-IL');
+        };
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Task data (departments and tasks)
+        const tasksData = [
+            { department: 'מחלקה א1', task: 'ציוד רפואי', completed: false },
+            { department: 'מחלקה א1', task: 'טיטולים', completed: false },
+            { department: 'מחלקה א1', task: 'מזון', completed: false },
+            { department: 'מחלקה א2', task: 'ציוד רפואי', completed: true },
+            { department: 'מחלקה א2', task: 'טיטולים', completed: false },
+            { department: 'מחלקה א2', task: 'מזון', completed: false },
+            { department: 'מחלקה ו1', task: 'ציוד רפואי', completed: false },
+            { department: 'מחלקה ו1', task: 'טיטולים', completed: false },
+            { department: 'מחלקה ו1', task: 'מזון', completed: false },
+            { department: 'מחלקה ו2', task: 'ציוד רפואי', completed: false },
+            { department: 'מחלקה ו2', task: 'טיטולים', completed: false },
+            { department: 'מחלקה ו2', task: 'מזון', completed: false },
+            { department: 'מחלקה ב\'', task: 'ציוד רפואי', completed: true },
+            { department: 'מחלקה ב\'', task: 'טיטולים', completed: false },
+            { department: 'מחלקה ב\'', task: 'מזון', completed: false },
+            { department: 'מחלקה ה\'', task: 'ציוד רפואי', completed: false },
+            { department: 'מחלקה ה\'', task: 'טיטולים', completed: false },
+            { department: 'מחלקה ה\'', task: 'מזון', completed: false },
+            { department: 'מחלקה ד1', task: 'ציוד רפואי', completed: false },
+            { department: 'מחלקה ד1', task: 'טיטולים', completed: false },
+            { department: 'מחלקה ד1', task: 'מזון', completed: false },
+            { department: 'מחלקה ד2', task: 'ציוד רפואי', completed: false },
+            { department: 'מחלקה ד2', task: 'טיטולים', completed: false },
+            { department: 'מחלקה ד2', task: 'מזון', completed: false },
+            { department: 'מחלקה ג\'', task: 'ציוד רפואי', completed: false },
+            { department: 'מחלקה ג\'', task: 'טיטולים', completed: false },
+            { department: 'מחלקה ג\'', task: 'מזון', completed: false }
+        ];
+
+        const tasksTable = document.getElementById('tasksTable').getElementsByTagName('tbody')[0];
+
+        // Populate tasks table
+        const populateTasks = () => {
+            tasksTable.innerHTML = '';
+            tasksData.forEach((task, index) => {
+                const row = tasksTable.insertRow();
+                row.insertCell(0).textContent = task.department;
+                row.insertCell(1).textContent = task.task;
+                
+                const statusCell = row.insertCell(2);
+                statusCell.textContent = task.completed ? 'בוצע' : 'לא בוצע';
+                statusCell.className = task.completed ? 'completed' : '';
+
+                const actionCell = row.insertCell(3);
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = task.completed;
+                checkbox.disabled = (currentUser === 'gil' || currentUser === 'arthur');
+                checkbox.addEventListener('change', () => {
+                    task.completed = checkbox.checked;
+                    updateProgress();
+                });
+                actionCell.appendChild(checkbox);
+            });
+            updateProgress();
+        };
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress');
+        const updateProgress = () => {
+            const completedTasks = tasksData.filter(task => task.completed).length;
+            const totalTasks = tasksData.length;
+            const progressPercentage = Math.round((completedTasks / totalTasks) * 100);
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${progressPercentage}%`;
+        };
+
+        document.getElementById('saveButton').addEventListener('click', () => {
+            alert('ה
