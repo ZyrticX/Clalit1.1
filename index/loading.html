@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טוען - מערכת ניהול משימות בית אבות</title>
+    <style>
+        :root {
+            --olive-green: #556B2F;
+            --light-gray: #f0f0f0;
+            --dark-gray: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        .loading-container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .spinner {
+            border: 4px solid var(--light-gray);
+            border-top: 4px solid var(--olive-green);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h2 {
+            color: var(--olive-green);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .welcome-message {
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <h2>טוען...</h2>
+        <div class="welcome-message"></div>
+    </div>
+
+    <script>
+        const loadingContainer = document.querySelector('.loading-container');
+        const welcomeMessage = document.querySelector('.welcome-message');
+        
+        setTimeout(() => {
+            loadingContainer.querySelector('.spinner').style.display = 'none';
+            loadingContainer.querySelector('h2').style.display = 'none';
+            welcomeMessage.innerHTML = `
+                <h2>שבוע טוב ארתור! :)</h2>
+                <p>זו ההתקדמות של הפיזורים:</p>
+            `;
+            welcomeMessage.style.opacity = '1';
+            
+            setTimeout(() => {
+                window.location.href = 'tasks.html';
+            }, 3000);
+        }, 5000);
+    </script>
+</body>
+</html>
