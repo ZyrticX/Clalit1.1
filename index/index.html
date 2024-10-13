@@ -17,6 +17,7 @@ function login() {
     // עיבוד נתוני ההתחברות
     setTimeout(() => {
         if (managers.includes(username)) {
+
             // אם זה ארתור או גיל - הצגת מסך טעינה מותאם אישית
             if (username === 'ארתור' || username === 'arthur') {
                 window.location.href = 'loading.html?user=arthur';
