@@ -1,71 +1,28 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>טוען... - מערכת ניהול משימות</title>
-    <style>
-        :root {
-            --olive-green: #556B2F;
-            --light-gray: #f0f0f0;
-            --dark-gray: #333333;
-            --white: #ffffff;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: var(--dark-gray);
-            color: var(--white);
-        }
-        .loading-container {
-            text-align: center;
-        }
-        .spinner {
-            border: 8px solid var(--light-gray);
-            border-top: 8px solid var(--olive-green);
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            animation: spin 2s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        h1 {
-            color: var(--olive-green);
-            margin-bottom: 1rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="loading-container">
-        <div class="spinner"></div>
-        <h1 id="loadingMessage">טוען...</h1>
-    </div>
+const urlParams = new URLSearchParams(window.location.search);
+const user = urlParams.get('user');
 
-    <script>
-        // מקבל את שם המשתמש מה-URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const username = urlParams.get('user');
+const loadingMessage = document.getElementById('loadingMessage');
 
-        // הצגת הודעת טעינה מותאמת אישית
-        const loadingMessage = document.getElementById('loadingMessage');
-        if (username === 'arthur') {
-            loadingMessage.textContent = 'שבוע טוב ארתור! טוען את המערכת...';
-        } else if (username === 'gil') {
-            loadingMessage.textContent = 'יום טוב גיל! טוען את המערכת...';
-        }
-
-        // מעבר לדף המשימות לאחר 5 שניות
-        setTimeout(() => {
-            window.location.href = 'tasks.html?user=' + encodeURIComponent(username);
-        }, 5000);
-    </script>
-</body>
-</html>
+if (user === 'arthur') {
+    loadingMessage.textContent = 'שבוע טוב ארתור!';
+    document.body.style.backgroundColor = '#000000'; // רקע שחור
+} else if (user === 'gil') {
+    loadingMessage.textContent = 'בוקר טוב גיל! המשך יום נעים';
+    document.body.style.backgroundColor = '#FFD700'; // רקע צהוב
+} else if (user === 'eran') {
+    loadingMessage.textContent = 'Have a nice day, Eran!';
+} else if (user === 'valery') {
+    loadingMessage.textContent = 'תעבוד כבר ימניאק חלאס לזיין במוח!';
+} else if (user === 'evgeniy') {
+    const motivationalQuotes = [
+        'אל תוותר!',
+        'כוח הרצון יוביל אותך קדימה!',
+        'הצלחה מחכה מעבר לפינה!',
+        'זה הזמן לשבור את כל המחסומים!',
+        'כל יום הוא הזדמנות חדשה!'
+    ];
+    const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+    loadingMessage.textContent = randomQuote;
+    document.body.style.color = '#000000'; // טקסט שחור על לבן
+    document.body.style.backgroundColor = '#FFFFFF'; // רקע לבן
+}
