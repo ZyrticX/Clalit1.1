@@ -1,66 +1,150 @@
 :root {
-    --cambridge-blue: #7C9B7B;
-    --cambridge-blue-2: #8FAB8F;
-    --anti-flash-white: #ECECEC;
-    --silver: #C5C5C5;
-    --ash-gray: #C5D2C5;
+    --olive-green: #556B2F;
+    --light-gray: #f0f0f0;
     --dark-gray: #333333;
+    --white: #ffffff;
+    --red: #ff0000;
+    --green: #008000;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--anti-flash-white); /* רקע לבן-אפור */
-    color: var(--dark-gray);
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background-color: var(--light-gray);
+    direction: rtl;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Login Page Styles */
 .login-container {
-    background-color: var(--cambridge-blue);
+    background-color: var(--white);
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     text-align: center;
-    width: 300px;
+    max-width: 400px;
+    margin: 50px auto;
 }
 
-h1 {
-    color: var(--anti-flash-white); /* טקסט לבן */
+.login-container h1 {
+    color: var(--olive-green);
     margin-bottom: 1.5rem;
 }
 
-input {
+.login-container input {
     display: block;
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
-    border: 1px solid var(--silver); /* גבול בצבע כסף */
+    border: 1px solid var(--light-gray);
     border-radius: 4px;
-    background-color: var(--ash-gray); /* רקע אפור-בהיר */
-    color: var(--dark-gray); /* טקסט כהה */
 }
 
-button {
+.login-container button {
     width: 100%;
     padding: 0.5rem;
-    background-color: var(--cambridge-blue-2); /* כפתור בצבע Cambridge Blue 2 */
-    color: var(--anti-flash-white); /* טקסט לבן */
+    background-color: var(--olive-green);
+    color: var(--white);
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: var(--cambridge-blue); /* כפתור בהיר יותר בהובר */
+.login-container button:hover {
+    background-color: #445624;
 }
 
-#loadingMessage {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--anti-flash-white);
+/* Loading Page Styles */
+.loading-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.spinner {
+    border: 4px solid var(--light-gray);
+    border-top: 4px solid var(--olive-green);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tasks Page Styles */
+.status-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: var(--light-gray);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 20px;
+    background-color: var(--olive-green);
+    text-align: center;
+    line-height: 20px;
+    color: var(--white);
+    transition: width 0.5s ease-in-out;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid var(--light-gray);
+    padding: 10px;
+    text-align: right;
+}
+
+th {
+    background-color: var(--olive-green);
+    color: var(--white);
+}
+
+.status-done {
+    color: var(--green);
+}
+
+.status-not-done {
+    color: var(--red);
+}
+
+#breakMessage {
+    background-color: var(--olive-green);
+    color: var(--white);
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    table {
+        font-size: 14px;
+    }
 }
